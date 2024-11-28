@@ -13,6 +13,11 @@ using System.Reflection;
 using Avalonia.VisualTree;
 using Avalonia.Interactivity;
 
+using FenrirEngine;
+
+using Rect = Avalonia.Rect;
+
+
 namespace AvaloniaApp.Views;
 
 public partial class MyCanvas : Control
@@ -36,6 +41,8 @@ public partial class MyCanvas : Control
     bool _isHit = false;
     private bool _isDraggingSprite; // スプライトがドラッグ中か
 
+    FenrirEngine.Engine _engine;
+
     public MyCanvas()
     {
         InitializeComponent();
@@ -54,7 +61,10 @@ public partial class MyCanvas : Control
         //InitializeTimer();
 
         InitializeSprite();
+
+        
     }
+
 
     private void InitializeSprite()
     {
@@ -75,10 +85,18 @@ public partial class MyCanvas : Control
             {
                 // Controlのネイティブ親ハンドル (HWND)
                 var hwnd = platformHandle.Handle;
-                Debug.WriteLine($"HWND: {hwnd}");
+
+                //InitializeEngine(hwnd);
             }
         }
     }
+
+
+    //private void InitializeEngine(IntPtr handle)
+    //{
+    //    _engine = Engine.getEngine(handle, (int)this.Width, (int)this.Height, 1);
+    //}
+
 
 
     //void OnTimerElapsed(object state)
@@ -97,7 +115,7 @@ public partial class MyCanvas : Control
         _rect = new Rect(0, 0, 64, 64);
 
         _brush = new SolidColorBrush(Colors.Blue);
-        _brushBack = new SolidColorBrush(Colors.Black);
+        _brushBack = new SolidColorBrush(Colors.Gray);
     }
 
 
@@ -161,7 +179,7 @@ public partial class MyCanvas : Control
 
         if (_sprite != null)
         {
-            for (int i = 0; i < 5000; i++)
+            for (int i = 0; i < 100; i++)
             {
                 // スプライトを描画
                 context.DrawImage(_sprite, new Rect(_sprite.Size), new Rect(_spritePosition + new Point(i, i), _sprite.Size));
