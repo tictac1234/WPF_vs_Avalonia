@@ -33,6 +33,11 @@ class Program
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
+            // Windows限定で高速に描画する
+            .With(new Win32PlatformOptions
+            {
+                CompositionMode = new[] { Win32CompositionMode.LowLatencyDxgiSwapChain }
+            })
             .LogToTrace();
 
 }
